@@ -1,1 +1,52 @@
-<h3>I'm Index</h3>
+<div class="container mx-auto mt-5">
+  <div class="col-md-8 mx-auto">
+    <div class="mt-3">
+      <form action="/filter">
+        <select class="form-select" name="categoryID" onchange="this.form.submit()">
+          {{#each categories}}
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          {{/each}}
+        </select>
+      </form>
+    </div>
+    <br>
+    <div class="px-3">
+      <p class="fs-4">總金額: </p>
+      <p class="text-center text-warning fs-border fs-1">100{{totalAmount}}</p>
+    </div>
+    <br>
+    <div>
+      <ul class="list-group">
+        {{!-- {{#each expenses}} --}}
+        <li class="list-group-item" style="background-color: #a6ccda">
+          <div class="row align-items-center justify-content-between">
+            <div class="col-auto row align-items-center">
+              <div class="icon col-auto">
+                <i class="fa-2xl fa-solid fa-house{{this.icon}}"></i>
+              </div>
+              <div class="col-auto">
+                <div class="name fs-4">吃飯{{this.name}}</div>
+                <div class="date fs-6">2020/09/10{{this.date}}</div>
+              </div>
+            </div>
+            <div class="amount col-auto text-end fs-4">60{{this.amount}}</div>
+            <div class="col-auto">
+              <a class="btn btn-outline-success" href="/expenses/{{this._id}}/edit">修改</a>
+              <form action="/expenses/{{this._id}}?_method=DELETE" method="POST" style="display:inline">
+                <button class="btn btn-outline-danger" type="submit">刪除</button>
+              </form>
+            </div>
+          </div>
+        </li>
+        {{!-- {{/each}} --}}
+      </ul>
+    </div>
+    <div class="text-center my-3">
+      <a class="btn btn-outline-primary" href="/expenses/new">新增支出</a>
+    </div>
+  </div>
+</div>
