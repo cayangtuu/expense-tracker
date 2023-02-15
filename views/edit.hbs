@@ -4,7 +4,7 @@
       <div class="col-4 fs-6" style="color:red">*必填欄位</div>
       <div class="col-6 text-center fs-4">請修改你的支出</div>
     </div>
-    <form action="/expenses/{{expenses._id}}?_method=PUT" method="POST">
+    <form action="/records/{{record._id}}?_method=PUT" method="POST">
       {{> form}}
       <div class="col-auto text-center mt-5">
         <button type="submit" class="btn btn-outline-primary">確認送出</button>
