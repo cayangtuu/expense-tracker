@@ -1,50 +1,47 @@
-<div class="container mx-auto mt-5">
-  <div class="col-md-8 mx-auto">
-    <div class="mt-3">
-      <form action="/">
-        <select class="form-select" name="categoryId" onchange="this.form.submit()">
-          <option value="">所有類別</option>
-          {{#each categories}}
-          <option value="{{this._id}}" {{#ifEq this._id ../categoryId}}selected{{/ifEq}}>{{this.name}}
-          </option>
-          {{/each}}
-        </select>
-      </form>
-    </div>
-    <br>
-    <div class="px-3">
-      <p class="fs-4">總金額: </p>
-      <p class="text-center text-warning fs-border fs-1">100{{totalAmount}}</p>
-    </div>
-    <br>
-    <div>
-      <ul class="list-group">
-        {{#each reRecords}}
-        <li class="list-group-item" style="background-color: #a6ccda">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-auto row align-items-center">
-              <div class="icon col-auto">
-                <i class="fa-2xl {{this.icon}}"></i>
-              </div>
-              <div class="col-auto">
-                <div class="name fs-4">{{this.name}}</div>
-                <div class="date fs-6">{{this.date}}</div>
-              </div>
-            </div>
-            <div class="amount col-auto text-end fs-4">{{this.amount}}</div>
-            <div class="col-auto">
-              <a class="btn btn-outline-success" href="/records/{{this._id}}/edit">修改</a>
-              <form action="/records/{{this._id}}?_method=DELETE" method="POST" style="display:inline">
-                <button class="btn btn-outline-danger" type="submit">刪除</button>
-              </form>
-            </div>
+<div class="mt-3">
+  <form action="/">
+    <select class="form-select" name="categoryId" onchange="this.form.submit()">
+      <option value="">所有類別</option>
+      {{#each categories}}
+      <option value="{{this._id}}" {{#ifEq this._id ../categoryId}}selected{{/ifEq}}>{{this.name}}
+      </option>
+      {{/each}}
+    </select>
+  </form>
+</div>
+<br>
+<div class="px-3">
+  <p class="fs-4">總金額: </p>
+  <p class="text-center text-warning fs-border fs-1">100{{totalAmount}}</p>
+</div>
+<br>
+<div>
+  <ul class="list-group">
+    {{#each reRecords}}
+    <li class="list-group-item" style="background-color: #a6ccda">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-auto row align-items-center">
+          <div class="icon col-auto">
+            <i class="fa-2xl {{this.icon}}"></i>
           </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div>
-    <div class="text-center my-3">
-      <a class="btn btn-outline-primary" href="/records/new">新增支出</a>
-    </div>
-  </div>
+          <div class="col-auto">
+            <div class="name fs-4">{{this.name}}</div>
+            <div class="date fs-6">{{this.date}}</div>
+          </div>
+        </div>
+        <div class="amount col-auto text-end fs-4">{{this.amount}}</div>
+        <div class="col-auto">
+          <a class="btn btn-outline-success" href="/records/{{this._id}}/edit">修改</a>
+          <form action="/records/{{this._id}}?_method=DELETE" method="POST" style="display:inline">
+            <button type="submit" class="btn btn-outline-danger"
+              onclick="return confirm(`確定要刪除 {{ this.name }} 嗎？`)">刪除</button>
+          </form>
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+<div class="text-center my-3">
+  <a class="btn btn-outline-primary" href="/records/new">新增支出</a>
 </div>

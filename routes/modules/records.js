@@ -4,14 +4,14 @@ const Category = require('../../models/Category')
 const Record = require('../../models/Record')
 const dayjs = require('dayjs')
 
-router.get('/new', (req, res) => {
+router.get('/new', (req, res, next) => {
   return Category.find()
     .lean()
     .then(categories => res.render('new', { categories }))
-    .catch(err => console.log(err))
+    .catch(err => next(err))
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res, next) => {
   try {
     const _id = req.params.id
     const categories = await Category.find().lean()
@@ -19,46 +19,56 @@ router.get('/:id/edit', async (req, res) => {
 
     record.date = dayjs(record.date).format('YYYY-MM-DD')
     const categoryId = record.categoryId
-    res.render('edit', { record, categories, categoryId })
+    return res.render('edit', { record, categories, categoryId })
   }
   catch (err) {
-    console.log(err)
+    return next(err)
   }
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const _id = req.params.id
-  const { amount } = req.body
-  if (amount < 0) {
-    console.log('輸入金額需大於0')
-    return res.redirect('back')
-  }
-  Record.findOne({ _id })
+  const { name, date, amount, categoryId } = req.body
+
+  if (!name || !date || !categoryId || !amount) throw new Error(`請確認欄位皆為必填!`)
+  if (amount < 0) throw new Error(`輸入金額需大於0!`)
+
+  return Record.findOne({ _id })
     .then(record => {
       for (let rec in req.body) {
         record[rec] = req.body[rec]
       }
       return record.save()
     })
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+    .then(() => {
+      req.flash('success_msg', `帳目修改成功!`)
+      return res.redirect('/')
+    })
+    .catch(err => next(err))
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const _id = req.params.id
-  Record.findOne({ _id })
-    .then(record => record.remove())
+  return Record.findOne({ _id })
+    .then(record => {
+      if (!record) throw new Error(`資料不存在!`)
+      record.remove()
+    })
     .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+    .catch(err => next(err))
 })
 
-router.post('/', (req, res) => {
-  const { amount } = req.body
-  if (amount < 0) {
-    console.log('輸入金額需大於0')
-    return res.redirect('back')
-  }
-  Record.create(req.body)
-    .then(() => res.redirect('/'))
+router.post('/', (req, res, next) => {
+  const { name, date, amount, categoryId } = req.body
+
+  if (!name || !date || !categoryId || !amount) throw new Error(`請確認欄位皆為必填`)
+  if (amount < 0) throw new Error(`輸入金額需大於0`)
+
+  return Record.create(req.body)
+    .then(() => {
+      req.flash('success_msg', `帳目新增成功!`)
+      return res.redirect('/')
+    })
+    .catch(err => next(err))
 })
 module.exports = router
