@@ -12,7 +12,7 @@
 <br>
 <div class="px-3">
   <p class="fs-4">總金額: </p>
-  <p class="text-center text-warning fs-border fs-1">100{{totalAmount}}</p>
+  <p class="text-center text-warning fs-border fs-1">{{totalAmount}}</p>
 </div>
 <br>
 <div>
@@ -20,11 +20,11 @@
     {{#each reRecords}}
     <li class="list-group-item" style="background-color: #a6ccda">
       <div class="row align-items-center justify-content-between">
-        <div class="col-auto row align-items-center">
-          <div class="icon col-auto">
+        <div class="col-7 row align-items-center">
+          <div class="icon col-2">
             <i class="fa-2xl {{this.icon}}"></i>
           </div>
-          <div class="col-auto">
+          <div class="col-10">
             <div class="name fs-4">{{this.name}}</div>
             <div class="date fs-6">{{this.date}}</div>
           </div>

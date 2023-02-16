@@ -23,7 +23,11 @@ router.get('/', async (req, res, next) => {
       reRecords = reRecords.filter(record => record.categoryId.toString() === categoryId.toString())
     }
 
-    return res.render('index', { categories, reRecords, categoryId })
+    // 計算總金額
+    const amounts = reRecords.map(el => el.amount)
+    const totalAmount = amounts.reduce((total, vl) => total + vl, 0)
+
+    return res.render('index', { categories, reRecords, categoryId, totalAmount })
   }
   catch (err) {
     return next(err)
