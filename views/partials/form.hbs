@@ -21,7 +21,10 @@
     </div>
     <div class="col-6 fs-4">
       <select class="form-control" id="category" name="categoryId" required>
-        <option value="">Select</option>
+        <option value="">---請選擇---</option>
+        {{#each categories}}
+        <option value="{{this._id}}" {{#ifEq this._id ../categoryId}}selected{{/ifEq}}>{{this.name}}</option>
+        {{/each}}
       </select>
     </div>
   </div>
