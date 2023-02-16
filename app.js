@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const flash = require('connect-flash')
 
@@ -21,8 +22,8 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-})
-)
+}))
+usePassport(app)
 
 app.use(flash())
 app.use((req, res, next) => {
