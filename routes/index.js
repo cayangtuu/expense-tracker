@@ -4,10 +4,11 @@ const home = require('./modules/home')
 const records = require('./modules/records')
 const users = require('./modules/users')
 const { generalErrorHandler } = require('../middleware/error')
+const { authenticator } = require('../middleware/auth')
 
-router.use('/records', records)
+router.use('/records', authenticator, records)
 router.use('/users', users)
-router.use('/', home)
+router.use('/', authenticator, home)
 router.use('/', generalErrorHandler)
 
 module.exports = router
