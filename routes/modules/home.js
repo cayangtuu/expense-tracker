@@ -6,9 +6,10 @@ const dayjs = require('dayjs')
 
 router.get('/', async (req, res, next) => {
   try {
+    const userId = req.user._id
     const categoryId = req.query.categoryId
     const categories = await Category.find().lean()
-    const records = await Record.find().lean()
+    const records = await Record.find({ userId }).lean()
 
     // 轉換日期與新增圖示icon
     let reRecords = records.map(record => {
